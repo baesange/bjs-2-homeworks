@@ -11,13 +11,13 @@ class PrintEditionItem {
     this.state = this._state * 1.5;
   }
 
-  set state(newState) {
-    if (newState < 0) {
+  set state(value) {
+    if (value < 0) {
       this._state = 0;
-    } else if (newState > 100) {
+    } else if (value > 100) {
       this._state = 100;
     } else {
-      this._state = newState;
+      this._state = value;
     }
   }
 
@@ -75,13 +75,19 @@ class Library {
   }
 
   findBookBy(type, value) {
-    return this.books.find(book => book[type] === value) || null;
+    for (let i = 0; i < this.books.length; i++) {
+      if (this.books[i][type] === value) {
+        return this.books[i];
+      }
+    }
+    return null;
   }
 
   giveBookByName(bookName) {
-    const index = this.books.findIndex(book => book.name === bookName);
-    if (index !== -1) {
-      return this.books.splice(index, 1)[0];
+    for (let i = 0; i < this.books.length; i++) {
+      if (this.books[i].name === bookName) {
+        return this.books.splice(i, 1)[0];
+      }
     }
     return null;
   }
