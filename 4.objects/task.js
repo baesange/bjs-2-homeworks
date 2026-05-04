@@ -10,7 +10,7 @@ Student.prototype.setSubject = function (subjectName) {
 }
 
 Student.prototype.addMarks = function (...marksToAdd) {
-  if (this.hasOwnProperty('marks')) {
+  if (this.marks) {
     this.marks.push(...marksToAdd);
   }
 }
@@ -20,12 +20,14 @@ Student.prototype.getAverage = function () {
     return 0;
   }
   
-  const sum = this.marks.reduce((acc, curr) => acc + curr, 0);
+  const sum = this.marks.reduce((acc, mark) => acc + mark, 0);
   return sum / this.marks.length;
 }
 
 Student.prototype.exclude = function (reason) {
+  // Удаляем старые свойства
   delete this.subject;
   delete this.marks;
+  
   this.excluded = reason;
 }
