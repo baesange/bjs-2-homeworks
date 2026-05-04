@@ -8,16 +8,16 @@ class PrintEditionItem {
   }
 
   fix() {
-    this.state = this._state * 1.5;
+    this.state = this.state * 1.5;
   }
 
-  set state(value) {
-    if (value < 0) {
+  set state(newState) {
+    if (newState < 0) {
       this._state = 0;
-    } else if (value > 100) {
+    } else if (newState > 100) {
       this._state = 100;
     } else {
-      this._state = value;
+      this._state = newState;
     }
   }
 
@@ -75,20 +75,26 @@ class Library {
   }
 
   findBookBy(type, value) {
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.books[i][type] === value) {
-        return this.books[i];
-      }
-    }
-    return null;
+    return this.books.find(book => book[type] === value) || null;
   }
 
   giveBookByName(bookName) {
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.books[i].name === bookName) {
-        return this.books.splice(i, 1)[0];
-      }
+    const index = this.books.findIndex(book => book.name === bookName);
+    if (index !== -1) {
+      return this.books.splice(index, 1)[0];
     }
     return null;
   }
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = {
+    PrintEditionItem,
+    Magazine,
+    Book,
+    NovelBook,
+    FantasticBook,
+    DetectiveBook,
+    Library
+  };
 }
